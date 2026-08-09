@@ -1,0 +1,6 @@
+# Local-only workaround for corporate TLS / MITM certificate issues.
+# Copy to a machine-local .npmrc outside the repo, or set temporarily:
+#   npm config set strict-ssl false --location=user
+#
+# Do NOT commit strict-ssl=false into the project .npmrc.
+# strict-ssl=false

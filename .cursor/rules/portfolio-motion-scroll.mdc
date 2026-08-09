@@ -1,0 +1,45 @@
+---
+description: Portfolio motion, LazyMotion, scroll architecture, mobile-first gating
+alwaysApply: true
+---
+
+# Motion & scroll
+
+## Rhythm
+
+**SPECTACLE → SILENCE → SPECTACLE → SILENCE.** Not everything animates.
+
+| Tier | Duration | Use |
+|---|---|---|
+| Micro | 120–220ms | buttons, icons, states |
+| Interface | 300–500ms | cards, menus, overlays |
+| Cinematic | 600–1100ms / scroll | hero, storytelling |
+
+## Scroll-linked pipeline
+
+`useScroll` → MotionValue → `useTransform` → optional `useSpring` → transform/opacity
+
+- `useSpring` = perceptual smoothing, **not** scroll throttling
+- No per-frame React state; no redundant scroll listeners; no artificial throttling unless a non-Motion calc needs it
+- Sticky storytelling OK; never hijack/prevent native scroll
+
+## LazyMotion
+
+- Prefer `m` inside LazyMotion trees; do not casually import full `motion` there
+- Baseline: `domAnimation`
+- `domMax` only for genuine drag/pan/layout needs; never ship globally “just in case”
+- Document any isolated chunk that needs a different feature bundle
+
+## Earn idle cost
+
+Pause irrelevant animation work via intersection visibility, document visibility, reduced motion, and responsive gating. No permanent decorative rAF loops. Justify `useAnimationFrame` and pause when offscreen/hidden.
+
+## Signature
+
+- Desktop: laptop CSS 3D + Motion module
+- Mobile: separate layer story module — never shrunk laptop
+- Reduced-motion: intentional alternate presentation
+
+## content-visibility
+
+Never blind-apply. Especially avoid on active sticky laptop containers unless profiling proves benefit. Reserve for large static below-fold sections.

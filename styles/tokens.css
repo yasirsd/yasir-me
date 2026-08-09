@@ -1,0 +1,201 @@
+/*
+  Semantic design tokens — GRAPHITE × LIQUID GLASS × SIGNAL
+  Dark-only values for v1. Token names stay theme-agnostic for a future light theme.
+*/
+
+:root {
+  /* ——— Color: foundation ——— */
+  --background: #08080a;
+  --background-elevated: #111216;
+  --surface: #191a1f;
+  --surface-strong: #22232a;
+  --foreground: #f7f7f5;
+  --foreground-secondary: #a5a5ac;
+  --foreground-tertiary: #6e6e76;
+  --border: rgb(255 255 255 / 0.08);
+  --border-strong: rgb(255 255 255 / 0.14);
+
+  /* ——— Color: brand ——— */
+  --signal-red: #ef233c;
+  --signal-red-cta: #d91c33;
+  --signal-red-deep: #c4182e;
+  --signal-red-soft: rgb(239 35 60 / 0.14);
+  --electric-gold: #fdc500;
+  --electric-gold-soft: rgb(253 197 0 / 0.14);
+  --electric-gold-glow: rgb(253 197 0 / 0.22);
+
+  /* ——— Color: semantic ——— */
+  --focus: #fdc500;
+  --danger: #ef233c;
+
+  /*
+    Glass materials — optically distinct hierarchy.
+    Soft ≈ tonal veil · Medium ≈ interactive material · Strong ≈ premium floating UI
+  */
+  --glass-soft-bg: linear-gradient(
+      165deg,
+      rgb(255 255 255 / 0.035) 0%,
+      rgb(17 18 22 / 0.22) 48%,
+      rgb(8 8 10 / 0.28) 100%
+    );
+  --glass-soft-border: rgb(255 255 255 / 0.05);
+  --glass-soft-ring: inset 0 0 0 1px rgb(255 255 255 / 0.02);
+  --glass-soft-highlight: inset 0 1px 0 rgb(255 255 255 / 0.08);
+  --glass-soft-blur: 6px;
+  --glass-soft-saturate: 1.05;
+  --glass-soft-shadow: 0 6px 18px rgb(0 0 0 / 0.18);
+
+  --glass-medium-bg: linear-gradient(
+      160deg,
+      rgb(255 255 255 / 0.07) 0%,
+      rgb(25 26 31 / 0.42) 42%,
+      rgb(17 18 22 / 0.55) 100%
+    );
+  --glass-medium-border: rgb(255 255 255 / 0.1);
+  --glass-medium-ring: inset 0 0 0 1px rgb(255 255 255 / 0.04);
+  --glass-medium-highlight: inset 0 1px 0 rgb(255 255 255 / 0.14);
+  --glass-medium-refraction: inset 0 -24px 40px rgb(253 197 0 / 0.03),
+    inset 18px -10px 36px rgb(239 35 60 / 0.025);
+  --glass-medium-blur: 12px;
+  --glass-medium-saturate: 1.12;
+  --glass-medium-shadow: 0 14px 36px rgb(0 0 0 / 0.32);
+
+  --glass-strong-bg: linear-gradient(
+      155deg,
+      rgb(255 255 255 / 0.11) 0%,
+      rgb(25 26 31 / 0.58) 38%,
+      rgb(12 12 15 / 0.72) 100%
+    );
+  --glass-strong-border: rgb(255 255 255 / 0.14);
+  --glass-strong-ring: inset 0 0 0 1px rgb(255 255 255 / 0.06);
+  --glass-strong-highlight: inset 0 1px 0 rgb(255 255 255 / 0.2),
+    inset 0 -1px 0 rgb(255 255 255 / 0.03);
+  --glass-strong-refraction: inset 0 -30px 48px rgb(253 197 0 / 0.04),
+    inset 24px -16px 42px rgb(239 35 60 / 0.035);
+  --glass-strong-specular: radial-gradient(
+    120% 80% at 18% 0%,
+    rgb(255 255 255 / 0.14),
+    transparent 42%
+  );
+  --glass-strong-blur: 18px;
+  --glass-strong-saturate: 1.18;
+  --glass-strong-shadow: 0 22px 56px rgb(0 0 0 / 0.48),
+    0 2px 0 rgb(255 255 255 / 0.03);
+
+  /* ——— CTA material ——— */
+  --cta-bg: linear-gradient(180deg, #f2344b 0%, var(--signal-red) 46%, var(--signal-red-cta) 100%);
+  --cta-highlight: inset 0 1px 0 rgb(255 255 255 / 0.22);
+  --cta-shadow: 0 8px 20px rgb(239 35 60 / 0.18);
+  --cta-shadow-hover: 0 10px 24px rgb(239 35 60 / 0.24);
+
+  /* ——— Ambient (compositional tools, not permanent decoration) ——— */
+  --ambient-signal: radial-gradient(
+    50% 45% at 20% 30%,
+    rgb(239 35 60 / 0.11),
+    transparent 70%
+  );
+  --ambient-gold: radial-gradient(
+    45% 40% at 80% 25%,
+    rgb(253 197 0 / 0.09),
+    transparent 68%
+  );
+  --ambient-graphite: radial-gradient(
+    70% 55% at 50% 0%,
+    rgb(34 35 42 / 0.55),
+    transparent 72%
+  );
+
+  /* ——— Radius (constitution-locked scale) ——— */
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-28: 28px;
+  --radius-32: 32px;
+  --radius-interactive: var(--radius-20);
+  --radius-surface: var(--radius-28);
+  --radius-pill: 999px;
+
+  /* ——— Spacing ——— */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  --page-gutter: clamp(1.125rem, 4.2vw, 2.5rem);
+  --section-space: clamp(4rem, 10vw, 8rem);
+  --content-gap: clamp(1.25rem, 3vw, 2rem);
+  --editorial-space: clamp(3rem, 8vw, 6rem);
+
+  /* ——— Content / type measures ——— */
+  --content-readable: 40rem;
+  --content-standard: 64rem;
+  --content-wide: 80rem;
+  --content-cinematic: 96rem;
+  --measure-display: min(18ch, 100%);
+  --measure-narrow: 28ch;
+  --measure-body: 62ch;
+  --measure-prose: 68ch;
+
+  /* ——— Type ——— */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --text-display-xl: clamp(2.5rem, 6.4vw, 5.25rem);
+  --text-display: clamp(2.125rem, 5vw, 4rem);
+  --text-h1: clamp(1.75rem, 3.5vw, 2.875rem);
+  --text-h2: clamp(1.375rem, 2.6vw, 2.125rem);
+  --text-h3: clamp(1.1875rem, 1.9vw, 1.5625rem);
+  --text-body-large: clamp(1.0625rem, 1.35vw, 1.25rem);
+  --text-body: 1rem;
+  --text-body-small: 0.875rem;
+  --text-label: 0.75rem;
+  --text-technical: 0.6875rem;
+
+  --leading-display: 1.04;
+  --leading-heading: 1.14;
+  --leading-body: 1.62;
+  --leading-label: 1.3;
+
+  --tracking-display: -0.035em;
+  --tracking-heading: -0.022em;
+  --tracking-label: 0.09em;
+  --tracking-technical: 0.13em;
+
+  /* ——— Motion (slightly damped) ——— */
+  --duration-micro: 150ms;
+  --duration-interface: 420ms;
+  --duration-cinematic: 850ms;
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0.85, 0.25, 1);
+  --ease-soft: cubic-bezier(0.33, 0.1, 0.2, 1);
+
+  /* ——— Z-index ——— */
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-floating: 20;
+  --z-nav: 30;
+  --z-overlay: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+
+  /* ——— Safe areas ——— */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+
+  /* ——— Interaction ——— */
+  --target-min: 44px;
+
+  /* Reserved for a future light theme — unused in v1 UI */
+  --theme-light-background: #f6f5f2;
+}
