@@ -1,0 +1,72 @@
+/* ---------------------------------------------------------------------------
+ * Material system — three tiers.
+ * mat-a  near-opaque surface   → content-dense components (cards)
+ * mat-b  translucent glass     → nav, chat input, floating chips
+ * mat-c  atmospheric layer     → decorative only (must be aria-hidden)
+ * ------------------------------------------------------------------------- */
+
+.mat-a {
+  background-color: color-mix(in oklab, var(--surface) 96%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+}
+
+.mat-b {
+  background-color: rgb(255 255 255 / 0.055);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+}
+
+[data-tone="light"] .mat-b {
+  background-color: rgb(255 255 255 / 0.7);
+  border-color: var(--border);
+}
+
+.mat-c {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgb(255 255 255 / 0.03),
+    transparent 65%
+  );
+  border-radius: var(--r-2xl);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Ambient glow presets — used sparingly, always aria-hidden.
+ * ------------------------------------------------------------------------- */
+.glow-red {
+  background: radial-gradient(
+    ellipse at center,
+    var(--red-soft),
+    transparent 55%
+  );
+  filter: blur(20px);
+}
+
+.glow-yellow {
+  background: radial-gradient(
+    ellipse at center,
+    var(--yellow-soft),
+    transparent 55%
+  );
+  filter: blur(20px);
+}
+
+/* ---------------------------------------------------------------------------
+ * Focus outline — uses the chapter-scoped --focus-ring token.
+ * Every focusable element inherits the right value automatically because
+ * Section shell sets --focus-ring on its data-tone root.
+ * ------------------------------------------------------------------------- */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+/* Hide default focus outline on mouse click but keep for keyboard nav. */
+:where(a, button, input, select, textarea, [tabindex]):focus:not(:focus-visible) {
+  outline: none;
+}

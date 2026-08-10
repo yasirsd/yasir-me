@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+@import "./tokens.css";
+@import "./materials.css";
+
+/* ---------------------------------------------------------------------------
+ * Tailwind v4 @theme — expose tokens as utility classes.
+ * ------------------------------------------------------------------------- */
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-red: var(--red);
+  --color-yellow: var(--yellow);
+
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --radius-xl: var(--r-xl);
+  --radius-2xl: var(--r-2xl);
+  --radius-pill: var(--r-pill);
+}
+
+/* ---------------------------------------------------------------------------
+ * Reset / base
+ * ------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  /* Compensate for fixed nav when scrolling to in-page anchors. */
+  scroll-padding-top: 88px;
+  scroll-padding-bottom: 96px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: var(--ls-h1);
+  line-height: var(--lh-heading);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+ * Utilities
+ * ------------------------------------------------------------------------- */
+.container-shell {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip-nav — first tab stop. */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: var(--z-modal);
+  padding: 0.75rem 1rem;
+  background-color: var(--yellow);
+  color: var(--on-yellow);
+  border-radius: var(--r-md);
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  transition: top 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--red);
+  color: var(--text);
+}
+
+/* ---------------------------------------------------------------------------
+ * Hero entrance keyframes — CSS-only so the hero can render + animate
+ * without pulling the Motion runtime onto the critical path. Motion is
+ * still used elsewhere (nav, below-fold sections) via smaller islands.
+ * ------------------------------------------------------------------------- */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.hero-enter {
+  animation: hero-rise var(--dur, 650ms) cubic-bezier(0.22, 1, 0.36, 1)
+    var(--delay, 0ms) both;
+}
+.hero-fade {
+  animation: hero-fade var(--dur, 500ms) cubic-bezier(0.22, 1, 0.36, 1)
+    var(--delay, 0ms) both;
+}
+
+@keyframes chip-in {
+  from { opacity: 0; transform: translateY(60%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.chip-swap {
+  animation: chip-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ---------------------------------------------------------------------------
+ * FloatingNav capsule — compaction is a plain CSS transition on padding,
+ * toggled by the [data-compact] attribute from a small scroll listener.
+ * No Motion runtime involved.
+ * ------------------------------------------------------------------------- */
+.nav-capsule {
+  padding: 10px 16px;
+  transition: padding 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-capsule[data-compact="true"] {
+  padding: 8px 12px;
+}
+
+/* MobileNav — CSS-driven show/hide. Toggled by [data-visible] from a
+   scroll-direction listener. */
+.mobile-nav-shell {
+  transform: translateY(28px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 280ms;
+}
+.mobile-nav-shell[data-visible="true"] {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0s;
+}
+.mobile-nav-shim {
+  opacity: 0;
+  transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mobile-nav-shim[data-visible="true"] {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-capsule,
+  .mobile-nav-shell,
+  .mobile-nav-shim {
+    transition: none !important;
+  }
+}
+
+/* Reveal — fade + rise, driven by data-shown toggled by an
+   IntersectionObserver. No Motion. */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance, 24px));
+  transition:
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+.reveal[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * ScrollProgress — pure CSS via scroll-driven animations.
+ * Zero JS, zero Motion runtime. Chromium 115+ only; others get no bar.
+ * ------------------------------------------------------------------------- */
+.scroll-progress {
+  transform: scaleX(0);
+}
+@keyframes scroll-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: scroll-fill linear;
+    animation-timeline: scroll(root);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-enter, .hero-fade, .chip-swap {
+    animation: none !important;
+  }
+}
+
+/* Section chapter background helpers */
+.chapter-bg-deep    { background-color: var(--bg); }
+.chapter-bg-raised  { background-color: var(--bg-raised); }
+.chapter-bg-surface { background-color: var(--surface); }
+.chapter-bg-elev    { background-color: var(--surface-elevated); }
